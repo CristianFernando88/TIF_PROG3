@@ -1,5 +1,9 @@
-import { Navigate,Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 function HeaderNav(){
+    const [activeMenu,setActiveMenu] = useState(false);
+    const {logout} = useAuth("actions");
     return(
         <header>
             <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -12,12 +16,6 @@ function HeaderNav(){
 
                     </a>
 
-                    <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true">Recetas</span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
                 </div>
 
                 <div id="navbarBasicExample" class="navbar-menu">
@@ -30,30 +28,56 @@ function HeaderNav(){
                             Recetas
                         </Link>
 
-                        {/* <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                More
+    
+                    </div>
+                    
+                    <div className="navbar-end">
+                        <div className="media has-text-centered" style={{"align-items": "center"}}>
+                            <div className="media-content is-inline-block">
+                                <div className="content">
+                                    <p className="has-text-centered">
+                                    <strong>John Smith</strong> <small>@johnsmith</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media-right has-background-primary-light p-1 is-inline-block">
+                                <figure class="image is-24x24 ">
+                                    <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />
+                                </figure>
+                            </div>
+                        </div>
+                        <div className={`navbar-item has-dropdown ${activeMenu ? ("is-active"):(null) }`}>
+                            <a className="navbar-link" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>
                             </a>
 
-                            <div class="navbar-dropdown">
-                                <a class="navbar-item">
-                                    About
+                            <div className="navbar-dropdown is-right">
+                                <Link to="/my-account/me" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mi perfil</Link>
+                                <Link to="/my-account/my-recipes" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis recetas</Link>
+                                <Link to="/my-account/my-favorites" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis favoritos</Link>
+        
+                                <hr className="navbar-divider"/>
+                            <div className="navbar-item" onClick={()=>{logout()}}>
+                                Cerrar sesión
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div class="navbar-end">
+                        <div class="navbar-item">
+
+
+                            <div class="buttons">
+                                <a class="button is-primary">
+                                    <strong>Sign up</strong>
                                 </a>
-                                <a class="navbar-item is-selected">
-                                    Jobs
-                                </a>
-                                <a class="navbar-item">
-                                    Contact
-                                </a>
-                                <hr class="navbar-divider"/>
-                                <a class="navbar-item">
-                                    Report an issue
+                                <a class="button is-light">
+                                    Log in
                                 </a>
                             </div>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
 
-                    <div class="navbar-end">
+                    {/* <div class="navbar-end">
                         <div class="navbar-item">
                             <div class="buttons">
                                 <a class="button is-primary">
@@ -64,7 +88,7 @@ function HeaderNav(){
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </nav>
         </header>

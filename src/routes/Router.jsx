@@ -14,6 +14,8 @@ import MyAccount from "../components/Profile/MyAccount";
 import MyFavorites from "../components/Profile/MyFavorites";
 import MyRecipes from "../components/Profile/MyRecipes";
 import { CrudProvider } from "../context/CrudContext";
+import LayoutAccount from "./LayoutAccount";
+import { AuthProvider } from "../context/AuthContext";
 
 
 const Router = createBrowserRouter([
@@ -51,24 +53,29 @@ const Router = createBrowserRouter([
             },
             
             {
-                path: "profile",
-                children: [
+                element: <LayoutAccount/>,
+                children: [  
                 {
-                    index: true,
-                    element:<Profile/>
+                    path: "my-account",
+                    children:[
+                        {
+                            path: "me",
+                            element:
+                            <ProtectedRoute>
+                                <MyAccount/>
+                            </ProtectedRoute>  
+                        },
+                        {
+                            path: "my-recipes",
+                            element:<MyRecipes/>
+                        },
+                        {
+                            path: "my-favorites",
+                            element:<MyFavorites/>
+                        },
+                    ]
                 },
-                {
-                    path: "me",
-                    element:<MyAccount/>
-                },
-                {
-                    path: "recipes",
-                    element:<MyRecipes/>
-                },
-                {
-                    path: "favorites",
-                    element:<MyFavorites/>
-                },
+                
                 
                 ]
             },
@@ -80,7 +87,8 @@ const Router = createBrowserRouter([
     },
     {
         path: "login",
-        element: <Login />,
+        element: <AuthProvider><Login /></AuthProvider>
+        ,
     },
 ]);
 

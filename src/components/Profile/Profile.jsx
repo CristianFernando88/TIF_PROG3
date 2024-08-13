@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Children } from "react";
 import { useAuth } from "../../context/AuthContext";
 import ProfileImageModal from "./ProfileImageModal";
 import useFetch2 from "../../hooks/useFetch2";
@@ -342,7 +342,7 @@ import { Link } from "react-router-dom";
 }
  */}
 
- function Profile(){
+ function Profile({children}){
     return(
         <>
             <div className="container box my-5 mx-5">
@@ -387,12 +387,13 @@ import { Link } from "react-router-dom";
                 </article>
                 <div class="tabs">
                     <ul>
-                        <li className="is-active"><Link to="/me">Mi cuenta</Link></li>
-                        <li><Link to="/recipes">Mis recetas</Link></li>
-                        <li><Link to="/favorites">Favoritos</Link></li>
+                        <li className="is-active"><Link to="/my-account/me">Mi cuenta</Link></li>
+                        <li><Link to="/my-account/my-recipes">Mis recetas</Link></li>
+                        <li><Link to="/my-account/my-favorites">Favoritos</Link></li>
                     </ul>
                 </div>
             </div>
+            {children}
         </>
     )
  }

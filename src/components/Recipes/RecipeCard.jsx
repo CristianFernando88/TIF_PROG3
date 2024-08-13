@@ -2,8 +2,11 @@ import imagePreparacion from "../../assets/images/tabla-de-cortar.png";
 import imageCocina from "../../assets/images/maceta.png";
 import imagePlato from "../../assets/images/plato.png";
 import { useNavigate, redirect } from "react-router-dom";
+import { AuthContext, useAuth } from "../../context/AuthContext";
+import { useContext } from "react";
 
 export default function RecipeCard({recipe=null}){
+    const {user__id, isAuthenticated} = useAuth("state");
     const navigate = useNavigate();
     return(
         <div>
@@ -54,11 +57,25 @@ export default function RecipeCard({recipe=null}){
                                     </div>
                                     
                                 </div>
+
                                     
                             </div>
                         </div>
 
                 </div>
+                {
+                    isAuthenticated && user__id == recipe.owner? (
+                        <div class="card">
+                            <footer class="card-footer">
+                                <a href="#" class="card-footer-item">Save</a>
+                                <a href="#" class="card-footer-item">Edit</a>
+                                <a href="#" class="card-footer-item">Delete</a>
+                            </footer>
+                        </div>
+            
+                    ) : (null)
+                }
+                
             </div>
         </div>
     )

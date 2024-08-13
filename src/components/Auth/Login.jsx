@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
     const usernameRef = useRef("");
@@ -7,14 +9,14 @@ function Login() {
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { login } = useAuth("actions");
-
+    const {login} = useAuth("actions");
+    const navigate = useNavigate();
     
     //podemos usarlo para redireccionar a otra ruta distinta cuando se authintique para no volver al login
-    /* const {isAuthetucated} = useAuth("state");
+    const {isAuthetucated} = useAuth("state");
     if(isAuthetucated){
-        Navigate()
-    } */
+        navigate("/");
+    }
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -39,7 +41,7 @@ function Login() {
             })
             .then((responseData) => {
                 console.log(responseData.token);
-                login(responseData.token);
+                /* login(responseData.token); */
                 if (responseData.token) {
                     fetch(
                         `${
@@ -60,8 +62,8 @@ function Login() {
                         }
                         return profileResponse.json();
                     })
-                    .then((profileData) =>
-                        login(responseData.token, profileData.user__id)
+                    .then((profileData) =>{
+                        login(responseData.token, profileData.user__id)}
                     )
                     .catch((error) => {
                         console.error(
