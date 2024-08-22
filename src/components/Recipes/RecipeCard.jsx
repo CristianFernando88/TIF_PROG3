@@ -4,13 +4,18 @@ import imagePlato from "../../assets/images/plato.png";
 import { useNavigate, redirect } from "react-router-dom";
 import { AuthContext, useAuth } from "../../context/AuthContext";
 import { useContext } from "react";
+import useFetch2 from "../../hooks/useFetch2";
+import { Link } from "react-router-dom";
 
 export default function RecipeCard({recipe=null}){
     const {user__id, isAuthenticated} = useAuth("state");
     const navigate = useNavigate();
     return(
         <div>
-            <div className="card" onClick={()=> navigate(`/recipes/${recipe.id}`)}>
+            <div className="card" onClick={(event)=> (
+                event.stopPropagation(),
+                navigate(`/recipes/${recipe.id}`))
+            }>
                 <div className="card-image">
                     <figure className="image is-3by2">
                     <img
@@ -65,11 +70,12 @@ export default function RecipeCard({recipe=null}){
                 </div>
                 {
                     isAuthenticated && user__id == recipe.owner? (
-                        <div class="card">
-                            <footer class="card-footer">
-                                <a href="#" class="card-footer-item">Save</a>
-                                <a href="#" class="card-footer-item">Edit</a>
-                                <a href="#" class="card-footer-item">Delete</a>
+                        <div className="card">
+                            <footer className="card-footer">
+                                <Link to={`/my-account/my-recipes/edit/${recipe.id}`} onClick={(e)=>{
+                                    e.stopPropagation();
+                                }} className="card-footer-item">Edit</Link>
+                                <a href="#" className="card-footer-item">Delete</a>
                             </footer>
                         </div>
             
@@ -77,6 +83,7 @@ export default function RecipeCard({recipe=null}){
                 }
                 
             </div>
+            
         </div>
     )
 }

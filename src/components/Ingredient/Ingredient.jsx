@@ -3,7 +3,7 @@ import useFetch2 from "../../hooks/useFetch2"
 
 export default function Ingredient({idIngredient,idRecipe}){
     
-    const {data,isLoading,isError,doFetch} = useFetch2(`https://sandbox.academiadevelopers.com/reciperover/ingredients/${idIngredient}`);
+    const {data,isLoading,isError,doFetch} = useFetch2(`${import.meta.env.VITE_API_BASE_URL}reciperover/ingredients/${idIngredient}`);
     const {
         data: detailsData,
         isLoading: detailsIsLoading,
@@ -16,7 +16,7 @@ export default function Ingredient({idIngredient,idRecipe}){
     },[]);
 
     useEffect(()=>{
-        detailFetch(`https://sandbox.academiadevelopers.com/reciperover/recipe-ingredients/?recipe=${idRecipe}&ingredient=${idIngredient}`,{});
+        detailFetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/recipe-ingredients/?recipe=${idRecipe}&ingredient=${idIngredient}`,{});
     },[]);
 
 

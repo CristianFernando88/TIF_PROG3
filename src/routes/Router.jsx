@@ -7,8 +7,7 @@ import Profile from "../components/Profile/Profile";
 import Recipe from "../components/Recipes/Recipe";
 import Recipes from "../components/Recipes/Recipes";
 import NotFound from "../components/NotFound";
-import RecipeForm from "../components/Forms/RecipeForm";
-import ProtectedRoute from "./ProtectedRoute";
+import CrudRecipeForm from "../components/Forms/CrudRecipeForm";
 import RecipesCategory from "../components/Categories/RecipesCategory";
 import MyAccount from "../components/Profile/MyAccount";
 import MyFavorites from "../components/Profile/MyFavorites";
@@ -41,14 +40,7 @@ const Router = createBrowserRouter([
                         path: "category/:id",
                         element: <RecipesCategory/>,
                     },
-                    {
-                        path: "new",
-                        element: 
-                        <CrudProvider>
-                            <RecipeForm/>
-                        </CrudProvider>,
-                    },
-
+                    
                 ],
             },
             
@@ -61,13 +53,32 @@ const Router = createBrowserRouter([
                         {
                             path: "me",
                             element:
-                            <ProtectedRoute>
+                           
                                 <MyAccount/>
-                            </ProtectedRoute>  
+                             
                         },
                         {
                             path: "my-recipes",
-                            element:<MyRecipes/>
+                            children:[
+                                {
+                                    index: true,
+                                    element: <MyRecipes/>,
+                                },
+                                {
+                                    path:"new",
+                                    element:
+                                    <CrudProvider>
+                                        <CrudRecipeForm/>
+                                    </CrudProvider>,
+                                },
+                                {
+                                    path:"edit/:id",
+                                    element:<CrudProvider>
+                                                <CrudRecipeForm/>
+                                            </CrudProvider>,
+                                },
+                            ]
+                            
                         },
                         {
                             path: "my-favorites",
