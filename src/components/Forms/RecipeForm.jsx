@@ -3,13 +3,14 @@ import useFetch2 from "../../hooks/useFetch2";
 import { useAuth } from "../../context/AuthContext";
 import { CrudContext } from "../../context/CrudContext";
 import ImageRecipeModal from "./ImageRecipeModal";
+import { useNavigate } from "react-router-dom";
 
 export default function RecipeForm(){
     const { recipe , setRecipe} = useContext(CrudContext)
     
     const [isEdit,setIsEdit] = useState(false);
     const [openModalImage,setIsOpenModalImage] = useState(false);
-
+    const navigate = useNavigate();
 
     const refImg = useRef();
     const refTitle = useRef();
@@ -278,7 +279,11 @@ export default function RecipeForm(){
                                         <button type="onSubmit" className="button is-primary">Guardar</button>
                                     </div>
                                     <div className="control">
-                                        <button className="button is-link is-danger">Cancelar</button>
+                                        <button className="button is-link is-danger" onClick={(e)=>{
+                                            e.preventDefault();
+                                            navigate(`/my-account/my-recipes/`);
+
+                                        }}>Cancelar</button>
                                     </div>
                                 </div>
                         

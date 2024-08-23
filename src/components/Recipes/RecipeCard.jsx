@@ -1,15 +1,23 @@
 import imagePreparacion from "../../assets/images/tabla-de-cortar.png";
 import imageCocina from "../../assets/images/maceta.png";
 import imagePlato from "../../assets/images/plato.png";
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate, redirect, useLocation } from "react-router-dom";
 import { AuthContext, useAuth } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useFetch2 from "../../hooks/useFetch2";
+import DeleteForm from "../Forms/DeleteForm";
 import { Link } from "react-router-dom";
 
-export default function RecipeCard({recipe=null}){
-    const {user__id, isAuthenticated} = useAuth("state");
+export default function RecipeCard({recipe=null,onDelete = null}){
+    const {user__id, isAuthenticated, token} = useAuth("state");
     const navigate = useNavigate();
+    const [openModal,setOpenModal] = useState(false);
+    
+    const location = useLocation();
+    const pathnamePrivate = location.pathname == "/my-account/my-recipes";
+
+    
+    
     return(
         <div>
             <div className="card" onClick={(event)=> (
@@ -69,13 +77,15 @@ export default function RecipeCard({recipe=null}){
 
                 </div>
                 {
-                    isAuthenticated && user__id == recipe.owner? (
+                    isAuthenticated && user__id == recipe.owner && pathnamePrivate? (
                         <div className="card">
                             <footer className="card-footer">
                                 <Link to={`/my-account/my-recipes/edit/${recipe.id}`} onClick={(e)=>{
                                     e.stopPropagation();
                                 }} className="card-footer-item">Edit</Link>
-                                <a href="#" className="card-footer-item">Delete</a>
+                                <a className="card-footer-item" onClick={(e)=>{
+                                    e.stopPropagation();
+                                    setOpenModal(true)}}>Delete</a>
                             </footer>
                         </div>
             
@@ -83,7 +93,22 @@ export default function RecipeCard({recipe=null}){
                 }
                 
             </div>
-            
+            <DeleteForm
+            isOpenModal={openModal}
+            onCloseModal={()=>setOpenModal(false)}
+            title={"Eliminar receta"}
+            message={"Esta seguro de eliminar esta receta"}
+            onDelete={onDelete}
+            apiUrl={`${import.meta.env.VITE_API_BASE_URL}reciperover/recipes/${recipe.id}/`}
+            actionApi={
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                }
+            }
+            />
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink , Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import useFetch2 from "../hooks/useFetch2";
 import imageDefaultUser from "../assets/images/usuario.png"
@@ -38,11 +38,11 @@ function HeaderNav(){
 
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <Link to="/" className="navbar-item">
+                        <Link to="/" className="navbar-item" onClick={()=>{setActiveMenu(false)}}>
                             Home
                         </Link>
 
-                        <Link to="/Recipes" className="navbar-item">
+                        <Link to="/Recipes" className="navbar-item" onClick={()=>{setActiveMenu(false)}}>
                             Recetas
                         </Link>
 
@@ -79,14 +79,25 @@ function HeaderNav(){
                                     </a>
         
                                     <div className="navbar-dropdown is-right">
-                                        <Link to="/my-account/me" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mi perfil</Link>
-                                        <Link to="/my-account/my-recipes" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis recetas</Link>
-                                        <Link to="/my-account/my-favorites" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis favoritos</Link>
+                                        <ul>
+                                            <li>
+                                                <Link to="/my-account/me" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mi perfil</Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/my-account/my-recipes"  className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis recetas</Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/my-account/my-favorites" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis favoritos</Link>
+                                            </li>
+                                        </ul>
+                                        
+                                       
+                                        
                 
-                                        <hr className="navbar-divider"/>
-                                    <div className="navbar-item" onClick={()=>{logout()}}>
-                                        Cerrar sesión
-                                    </div>
+                                            <hr className="navbar-divider"/>
+                                        <Link className="navbar-item" onClick={()=>{logout()}}>
+                                            Cerrar sesión
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

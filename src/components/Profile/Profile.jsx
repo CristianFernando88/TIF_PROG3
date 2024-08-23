@@ -43,7 +43,7 @@ return(
                     <div className="content">
                         <h1 className="title">Bienvenido</h1>
                         {
-                            data ? (<p><strong>{data.first_name}</strong></p>):(null)
+                            data ? (<p className="is-2"><strong>{data.first_name}</strong></p>):(null)
                         }
                         
                     </div>
@@ -51,27 +51,27 @@ return(
             </article>
             <div className="tabs">
                 <ul>
-                    <li><NavLink to="/my-account/me" className={({isActive,isPending,isTransitiioning})=>
+                    <li ><NavLink to="/my-account/me" className={({isActive,isPending,isTransitiioning})=>
                             [
-                                isPending ? "peding" : "",
-                                isActive ? "active" : "",
-                                isTransitiioning ? "transitioning" :"",
+                                isPending ? "pending" : "",
+                                isActive ? "has-background-warning has-text-weight-bold" : "",
+                                isTransitiioning ? "transitiioning" :"",
                             ].join(" ")
 
                         }>Mi cuenta</NavLink></li>
                     <li><NavLink to="/my-account/my-recipes" className={({isActive,isPending,isTransitiioning})=>
                             [
-                                isPending ? "peding" : "",
-                                isActive ? "active" : "",
-                                isTransitiioning ? "transitioning" :"",
+                                isPending ? "pending" : "",
+                                isActive ? "has-background-warning has-text-weight-bold" : "",
+                                isTransitiioning ? "transitiioning" :"",
                             ].join(" ")
 
                         }>Mis recetas</NavLink></li>
                     <li><NavLink to="/my-account/my-favorites" className={({isActive,isPending,isTransitiioning})=>
                             [
-                                isPending ? "peding" : "",
-                                isActive ? "active" : "",
-                                isTransitiioning ? "transitioning" :"",
+                                isPending ? "pending" : "",
+                                isActive ? "has-background-warning has-text-weight-bold" : "",
+                                isTransitiioning ? "transitiioning" :"",
                             ].join(" ")
 
                         }>Favoritos</NavLink></li>

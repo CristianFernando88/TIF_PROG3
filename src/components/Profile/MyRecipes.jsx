@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 import useFetch2 from "../../hooks/useFetch2";
-import useFetch from "../../hooks/useFetch";
-import Recipes from "../Recipes/Recipes";
 import { useAuth } from "../../context/AuthContext";
 import RecipeCard from "../Recipes/RecipeCard";
-/* import DeleteForm from "../Forms/DeleteForm"; */
+import { useNavigate } from "react-router-dom";
 
 export default function MyRecipes(){
     const { user__id} = useAuth("state")
     const url = `${import.meta.env.VITE_API_BASE_URL}reciperover/recipes/?page_size=100`;
     const {data,isLoading,isError,doFetch} = useFetch2(url,{});
-    const [openDeleteForm,setOpenDeleteForm] = useState();
+    const navigate = useNavigate()
+    
+    const {isDelete:deleteRecipe,isLoading:deleteIsLoading,isError:deleteIsError,doFetch:doFetchDelete} = useFetch2();
     useEffect(()=>{
         doFetch();
     },[]);
+
+    useEffect(()=>{
+        if(deleteRecipe){
+            doFetch();
+
+        }
+    },[deleteRecipe])
 
 
     if(isLoading) return (
@@ -34,9 +41,12 @@ export default function MyRecipes(){
             <div>
                 <h1 className="title is-4">Mis recetas</h1>
             </div>
-            <button className="button is-success is-right">
-                <span>Crear Receta</span>
-            </button>
+            <div>
+                <button className="button is-success is-right" onClick={()=>navigate(`/my-account/my-recipes/new`)}>
+                    <span>Crear Receta</span>
+                </button>
+            </div>
+            
             <hr />
             <div className="columns is-multiline"> 
                 {
@@ -45,6 +55,7 @@ export default function MyRecipes(){
                             <div key={recipe.id} className="column is-one-quarter">
                                 <RecipeCard
                                 recipe={recipe}
+                                onDelete={{deleteRecipe,deleteIsLoading,deleteIsError,doFetchDelete}}
                                 />
                             </div>
                         ))
@@ -52,7 +63,7 @@ export default function MyRecipes(){
                 }
 
             </div>
-           {/* <DeleteForm title={"Mis recetas"} message={"¿Esta seguro de eliminar esta receta?"}/> */}
+           
             
         </div>
     )

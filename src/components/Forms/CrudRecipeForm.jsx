@@ -8,7 +8,7 @@ import StepsFormModal from "./StepsModal";
 import { useParams } from "react-router-dom";
 import CategoriesForm from "./CategoriesForm";
 import RecipeForm from "./RecipeForm";
-
+import { Link } from "react-router-dom";
 
 export default function CrudRecipeForm(){
     const { recipe , setRecipe} = useContext(CrudContext);
@@ -30,156 +30,40 @@ export default function CrudRecipeForm(){
         }
     },[data])
     
-    /* const { token } = useAuth('state');
-    const {newIngredients,setNewIngredients,newSteps,setNewSteps} = useContext(CrudContext); */
-
-    
-    
-    
-    
-
-
-    //agregamos receta 
-    //const {data:addRecipe,isLoading:isLoadingRecipe,isError:isErrorRecipe,doFetch:addRecipeFetch} = useFetch2();
-
-    //para cargar las categorias
-
-    //para cargar al iniciar el formulario las opciones de categorias
-    /* useEffect(()=>{
-        categoriesFetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/categories/?page_size=100`,{});
-    },[]); */
-
-    /* useEffect(()=>{
-        if(addRecipe && !(selectedCategories.length===0)){
-            selectedCategories.map((category)=>{
-                fetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/recipe-categories/`,{
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${token}`,
-                    },
-                    body: JSON.stringify({
-                            "recipe": addRecipe.id,
-                            "category": category.id
-                    }),
-                })
-                .then((response)=>{
-                    if(!response.ok){
-                        throw new Error("Error al obtener datos");
-                    }
-                })
-                .catch((e)=>{
-                    console.error("Error al asignar categoria")
-                });
-            })
-        }
-        if(addRecipe && newIngredients.length>0){
-            newIngredients.map((newIngredient)=>{
-                fetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/recipe-ingredients/`,{
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${token}`,
-                    },
-                    body: JSON.stringify({
-                            "quantity": newIngredient.quantity,
-                            "measure": newIngredient.measure.key,
-                            "recipe": addRecipe.id,
-                            "ingredient": newIngredient.ingredient.id
-                      }),
-                })
-                .then((response)=>{
-                    if(!response.ok){
-                        throw new Error("Error al obtener datos");
-                    }
-                })
-                .catch((e)=>{
-                    console.error("Error al asignar categoria")
-                });
-            })
-        }
-        if(addRecipe && newSteps.length>0){
-            newSteps.map((newStep)=>{
-                fetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/steps/`,{
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${token}`,
-                    },
-                    body: JSON.stringify({
-                        "order": newStep.order,
-                        "instruction": newStep.instruction,
-                        "recipe": addRecipe.id
-                      }),
-                })
-                .then((response)=>{
-                    if(!response.ok){
-                        throw new Error("Error al obtener datos");
-                    }
-                })
-                .catch((e)=>{
-                    console.error("Error al asignar categoria")
-                });
-            })
-        }
-        
-    },[addRecipe]); */
-
-
-    /* const handleCategoryChange = (event) => {
-        const selectedOptions = Array.from(
-            event.target.selectedOptions,
-            (option) => option.value
-        );
-        const updatedSelectedCategories = categories.results.filter((cat) =>
-            selectedOptions.includes(String(cat.id))
-        );
-        console.log(updatedSelectedCategories);
-        setSelectedCategories(updatedSelectedCategories);
-        
-    };
-
-
-    const handleInputChange = (e) => {
-        setFormInput({
-          ...formInput,
-          [e.target.name]: e.target.value,
-        });
-      };
-
-    const handleFileChange = (e)=>{
-        setFormImage(e.target.files[0]);
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const newForm = new FormData();
-        newForm.append("title",formInput.title);
-        newForm.append("description",formInput.description);
-        newForm.append("preparation_time",formInput.preparation);
-        newForm.append("cooking_time",formInput.cooking);
-        newForm.append("servings",formInput.servings);
-        if(formImage){
-            newForm.append("image",formImage);
-        }
-        addRecipeFetch(`${import.meta.env.VITE_API_BASE_URL}/reciperover/recipes/`,{
-            method: "Post",
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-            body: newForm,
-        })
-    };
-
-    const saveIngredients = (e)=>{
-        e.preventDefault();
-        if(newIngredients.length > 0){
-            
-        }
-    } */
     return(        
         
         <div className="container my-5 mx-5">
+            {recipe ? (
+                <div>
+                    <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+                        <ul>
+                            <li><Link to="/my-account/my-recipes">Mis recetas</Link></li>
+                            <li><Link to="#">editar</Link></li>
+                            
+                        </ul>
+                    </nav>
+                    <div className="box has-background-link-70">
+                        <h2 className="title">Editar receta</h2>
+                    </div>
+                </div>
+                
+
+            ) : (
+                <div>
+                    <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+                        <ul>
+                            <li><Link to="/my-account/my-recipes">Mis recetas</Link></li>
+                            <li><Link to="#">nuevo</Link></li>
+                            
+                        </ul>
+                    </nav>
+                    <div className="box has-background-primary-70">
+                        <h2 className="title">Crea tu propia receta</h2>
+                    </div>
+                </div>
+                
+            )}
+            
             <div className="box">
                 <RecipeForm 
                 recipe={data}
