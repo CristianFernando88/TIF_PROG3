@@ -90,9 +90,9 @@ function HeaderNav(){
                                     </div>
                                 </div>
                             </div>
-                            ) : (<div class="navbar-end">
-                                <div class="navbar-item">
-                                  <div class="buttons">
+                            ) : (<div className="navbar-end">
+                                <div className="navbar-item">
+                                  <div className="buttons">
                                     <Link to="/Login" className="button is-primary is-light">Log in</Link>
                                   </div>
                                 </div>

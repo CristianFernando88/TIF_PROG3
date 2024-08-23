@@ -177,12 +177,13 @@ export default function CrudRecipeForm(){
             
         }
     } */
-    
     return(        
         
         <div className="container my-5 mx-5">
             <div className="box">
-                <RecipeForm />
+                <RecipeForm 
+                recipe={data}
+                />
             </div>
 
             <div className={recipe ? ("box") : ("box is-hidden")}>
@@ -190,28 +191,11 @@ export default function CrudRecipeForm(){
             </div>
   
             <div className={recipe ? ("box") : ("box is-hidden")}>
-                <IngredientsForm
-                    isOpendModal={()=>{
-                        if(isOpenModalIngredient){
-                            setIsOpenModalIngredient(false);
-                        }else{
-                            setIsOpenModalIngredient(true);
-                        }
-                    }}
-                />
+                <IngredientsForm/>
             </div>
             
             <div className={recipe ? ("box") : ("box is-hidden")}>
-                <StepsForm
-                    isOpendModal={()=>{
-                        if(isOpenModalStep){
-                            setIsOpenModalStep(false);
-                        }else{
-                            setIsOpenModalStep(true);
-                        }
-                    }}
-
-                />
+                <StepsForm/>
             </div>
         
         </div>

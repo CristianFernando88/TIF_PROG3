@@ -34,7 +34,7 @@ export default function ItemSteps({step,onDelete,onUpdate}){
                
             <div className="column field is-grouped">
                 <div className="control">
-                    <button class="button is-link" onClick={()=>setOpenModalEdit(true)}>Editar</button>
+                    <button className="button is-link" onClick={()=>setOpenModalEdit(true)}>Editar</button>
                 </div>
                 <div className="control">
                     <button className="button is-link is-light" onClick={()=>setOpenModal(true)}>Eliminar</button>

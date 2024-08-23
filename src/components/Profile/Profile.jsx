@@ -28,16 +28,16 @@ return(
             <article className="media">
                 <div className="media-left">
                     
-                <figure className="image is-64x64">
-                    {
-                        data ? ( data.image ? (
-                            <img className="is-rounded " src={`${import.meta.env.VITE_API_BASE_URL}${data.image}`} alt="Image" />
-                            ) : (<img className="is-rounded has-background-link-85" src={imageDefaultUser} alt="Image" />)  
-                            ) : (
-        
-                            <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />)
-                        }
-                </figure>
+                    <figure className="image is-64x64">
+                        {
+                            data ? ( data.image ? (
+                                <img className="is-rounded " src={`${import.meta.env.VITE_API_BASE_URL}${data.image}`} alt="Image" />
+                                ) : (<img className="is-rounded has-background-link-85" src={imageDefaultUser} alt="Image" />)  
+                                ) : (
+            
+                                <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />)
+                            }
+                    </figure>
                 </div>
                 <div className="media-content">
                     <div className="content">
