@@ -1,12 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import useFetch2 from "../hooks/useFetch2";
+import imageDefaultUser from "../assets/images/usuario.png"
 function HeaderNav(){
     const [activeMenu,setActiveMenu] = useState(false);
     const {logout} = useAuth("actions");
+    const {token} = useAuth("state");
+    const {data,isLoading,isError,doFetch} = useFetch2();
+
+    useEffect(()=>{
+        if(token){
+            doFetch(`${import.meta.env.VITE_API_BASE_URL}/users/profiles/profile_data/`,{
+                method: "GET",
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            })
+        }
+        
+    },[token])
+
+
     return(
-        <header>
-            <nav className="navbar" role="navigation" aria-label="main navigation">
+        <header >
+            <nav className="navbar has-background-warning-70" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <a className="navbar-item" href="https://bulma.io">
                     <svg width="640" height="160" viewBox="0 0 640 160" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,37 +49,58 @@ function HeaderNav(){
     
                     </div>
                     
-                    <div className="navbar-end">
-                        <div className="media has-text-centered" style={{"alignItems": "center"}}>
-                            <div className="media-content is-inline-block">
-                                <div className="content">
-                                    <p className="has-text-centered">
-                                    <strong>John Smith</strong> <small>@johnsmith</small>
-                                    </p>
+                   
+                        {
+                            data ? (
+                                <div className="navbar-end">
+                                    <div className="media full-heigth">
+                                        <div className="media-content">
+                                            <div className="content">
+                                                <p className="has-text-centered">
+                                                <small>{data.email}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="media-right p-1 ">
+                                            <figure className="image is-24x24 ">
+                                            {
+                                            data ? ( data.image ? (
+                                                <img className="is-rounded " src={`${import.meta.env.VITE_API_BASE_URL}${data.image}`} alt="Image" />
+                                                ) : (<img className="is-rounded has-background-link-85" src={imageDefaultUser} alt="Image" />)  
+                                                ) : (
+                            
+                                                <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />)
+                                            }
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    <div className={`navbar-item has-dropdown ${activeMenu ? ("is-active"):(null) }`}>
+                                    <a className="navbar-link" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>
+                                    </a>
+        
+                                    <div className="navbar-dropdown is-right">
+                                        <Link to="/my-account/me" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mi perfil</Link>
+                                        <Link to="/my-account/my-recipes" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis recetas</Link>
+                                        <Link to="/my-account/my-favorites" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis favoritos</Link>
+                
+                                        <hr className="navbar-divider"/>
+                                    <div className="navbar-item" onClick={()=>{logout()}}>
+                                        Cerrar sesión
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="media-right has-background-primary-light p-1 is-inline-block">
-                                <figure className="image is-24x24 ">
-                                    <img className="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" alt="Image" />
-                                </figure>
-                            </div>
-                        </div>
-                        <div className={`navbar-item has-dropdown ${activeMenu ? ("is-active"):(null) }`}>
-                            <a className="navbar-link" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>
-                            </a>
-
-                            <div className="navbar-dropdown is-right">
-                                <Link to="/my-account/me" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mi perfil</Link>
-                                <Link to="/my-account/my-recipes" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis recetas</Link>
-                                <Link to="/my-account/my-favorites" className="navbar-item" onClick={()=>{activeMenu ? setActiveMenu(false):setActiveMenu(true)}}>Mis favoritos</Link>
-        
-                                <hr className="navbar-divider"/>
-                            <div className="navbar-item" onClick={()=>{logout()}}>
-                                Cerrar sesión
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+                            ) : (<div class="navbar-end">
+                                <div class="navbar-item">
+                                  <div class="buttons">
+                                    <Link to="/Login" className="button is-primary is-light">Log in</Link>
+                                  </div>
+                                </div>
+                              </div>)
+                        }
+                        
+                        
+                    
                     
                 </div>
             </nav>
