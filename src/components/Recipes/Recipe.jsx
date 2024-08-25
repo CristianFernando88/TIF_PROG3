@@ -6,11 +6,13 @@ import imageChef from "../../assets/images/cocinero.png";
 import { useState, useEffect} from "react";
 import useFetch from "../../hooks/useFetch.js";
 import useFetch2 from "../../hooks/useFetch2.js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Ingredient from "../Ingredient/Ingredient.jsx";
 function Recipe(){
     
+    const navigate = useNavigate()
+
     const {id}=useParams();
     
     const {
@@ -28,11 +30,11 @@ function Recipe(){
     } = useFetch2();
 
     useEffect(()=>{
-        recipeFetch(`https://sandbox.academiadevelopers.com/reciperover/recipes/${id}/`);
+        recipeFetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/recipes/${id}/`);
     },[]);
 
     useEffect(()=>{
-        stepFetch(`https://sandbox.academiadevelopers.com/reciperover/steps/?recipe=${id}&ordering=order`)
+        stepFetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/steps/?recipe=${id}&ordering=order`)
     },[]);
     
 
@@ -41,8 +43,11 @@ function Recipe(){
     if(!recipeData) return <p>La receta no existe</p>
     return (
         <div>
-            <div className="box my-5 mx-5">
-                <div className="columns">
+            <div className="box my-5 mx-5 ">
+                <div className="is-flex is-justify-content-flex-end">
+                    <button className="button is-primary" onClick={()=>navigate(-1)}>volver</button>
+                </div>
+                <div className="columns ">
                     <div className="column is-two-fifths">
                         <figure className="image is-5by3">
                             <img src= {recipeData.image} />
@@ -81,19 +86,21 @@ function Recipe(){
                                 
                             </div>
                         </div>
+                        <div>
+                            <h2 className="subtitle is-size-4 has-text-weight-bold">Description</h2>
+                            <p className="is-size-6">{recipeData.description}</p>
+                        </div>
                         
                     </div>
-                </div>
-                <div>
-                    <h2 className="subtitle is-size-4">Description</h2>
-                    <p className="is-size-6">{recipeData.description}</p>
+                    
                 </div>
                 
+                
             </div>
-            <div className="box my-5 mx-5 columns">
+            <div className="box my-5 mx-5 columns has-background-warning-90">
 
                 <div className="column is-three-quarters px-2">
-                    <h2 className="subtitle is-size-4">Pasos</h2>
+                    <h2 className="subtitle is-size-4 has-text-weight-bold">Pasos</h2>
                     <ul>
                         {
                             stepIsLoading ? (<p>Cargando pasos</p>):
@@ -110,16 +117,17 @@ function Recipe(){
                 </div>
 
                 <div className="column">
-                    <h2 className="subtitle is-size-4">Ingredientes</h2>
+                    <h2 className="subtitle is-size-4 has-text-weight-bold">Ingredientes</h2>
                     {
                         recipeData ? (<ul>
                             {recipeData.ingredients.map((ingredient)=>(
-                                <li key={ingredient} className="is-size-6">
+                              
                                     <Ingredient
+                                        key={ingredient}
                                         idIngredient={ingredient}
                                         idRecipe={id}
                                     />
-                                </li>
+                                
                                 ))}
                             </ul>
                         ):(null)

@@ -12,7 +12,7 @@ export default function Home(){
             <div className="container box my-5 mx-5">
                 <h2 className="title">La mas visitadas</h2>
                 <Recipes
-                    urlPath={"/reciperover/recipes/?ordering=-view_count&page_size=5"}
+                    urlFilter={"?ordering=-view_count&page_size=5"}
                 />
             </div>
             

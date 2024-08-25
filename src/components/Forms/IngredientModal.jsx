@@ -15,21 +15,9 @@ export default function IngredientModal({openModal,onClose,onAction,ingredient=n
     const {data:dataIngredient,isLoading:loadingIngredient,isError:errorIngredient,doFetch:ingredientFecth} = useFetch2();
     const {data:measures,isLoading:isLoadingMeasures,isError:isErrorMeasures,doFetch:measuresFetch} = useFetch2();
 
-    /* if(ingredient){
-        refIngredient.current.value = [ingredient.ingredient];
-        refQuantity.current.value = ingredient.quantity;
-        refMeasure.current.value = [ingredient.measure];
-    }else{
-        refIngredient.current.value = "";
-        refQuantity.current.value = 0;
-        refMeasure.current.value = "";
-    } */
-
-
-    /* const [form,setForm] = useState({id:null,ingredient : "",quantity:"",measure:""}) */
 
     useEffect(()=>{
-        ingredientFecth(`${import.meta.env.VITE_API_BASE_URL}reciperover/ingredients/?page_size=200`,{});
+        ingredientFecth(`${import.meta.env.VITE_API_BASE_URL}reciperover/ingredients/?ordering=name&page_size=300`,{});
         measuresFetch(`${import.meta.env.VITE_API_BASE_URL}reciperover/measures/`,{});
     },[])
 
@@ -42,42 +30,11 @@ export default function IngredientModal({openModal,onClose,onAction,ingredient=n
 
     },[dataIngredient,measures])
 
-    const handleInputChange = (e) => {
-        setForm({
-          ...form,
-          [e.target.name]: e.target.value,
-        });
-      };
-
-    const handleIngredientChange = (event) => {
-        const selectedOptions = Array.from(
-            event.target.selectedOptions,
-            (option) => option.value
-        );
-        //guarda todo el ingrediente en el form temporal
-        const updatedSelectedIngredient = dataIngredient.results.filter((cat) =>
-            selectedOptions.includes(String(cat.id))
-        );
-        
-        setForm({
-            ...form,
-            ingredient : updatedSelectedIngredient[0],
-        })
-
-        
-    };
-
-
 
     const handleSubmit = (e)=>{
         e.preventDefault();
 
         if(refIngredient.current.value != "" && refQuantity.current.value != "" && refMeasure.current.value != "" ){
-            /* const ingredient = categories.results.filter((cat)=>cat.id == refCategory.current.value)[0]; */
-            /* console.log(refIngredient.current.value);
-            console.log(refQuantity.current.value);
-            console.log(refMeasure.current.value) */
-
             if(ingredient){
                 onAction.doFetchUpdate(`${import.meta.env.VITE_API_BASE_URL}reciperover/recipes/${ingredient.recipe}/ingredients/${ingredient.id}/`,{
                     method: "PATCH",

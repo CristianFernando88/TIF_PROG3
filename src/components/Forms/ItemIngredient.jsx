@@ -63,10 +63,10 @@ export default function ItemIngredient({ingredient,onDelete,onUpdate}){
             </div>   
             <div className="field column is-grouped">
                 <div className="control">
-                    <button className="button is-success is-light" onClick={()=>setOpenUpdateModal(true)}>Editar</button>
+                    <button className="button is-success" onClick={()=>setOpenUpdateModal(true)}>Editar</button>
                 </div>
                 <div className="control">
-                    <button className="button is-danger is-light" onClick={()=>setOpenDeleteModal(true)}>Eliminar</button>
+                    <button className="button is-danger" onClick={()=>setOpenDeleteModal(true)}>Eliminar</button>
                 </div>
             </div>
             <DeleteForm

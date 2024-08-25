@@ -5,7 +5,6 @@ import Layout from "./Layout";
 /* import ProtectedRoute from "./ProtectedRoute"; */
 import Profile from "../components/Profile/Profile";
 import Recipe from "../components/Recipes/Recipe";
-import Recipes from "../components/Recipes/Recipes";
 import NotFound from "../components/NotFound";
 import CrudRecipeForm from "../components/Forms/CrudRecipeForm";
 import RecipesCategory from "../components/Categories/RecipesCategory";
@@ -14,6 +13,7 @@ import MyFavorites from "../components/Profile/MyFavorites";
 import MyRecipes from "../components/Profile/MyRecipes";
 import { CrudProvider } from "../context/CrudContext";
 import LayoutAccount from "./LayoutAccount";
+import AllRecipes from "../components/Recipes/AllRecipes";
 import { AuthProvider } from "../context/AuthContext";
 
 
@@ -26,11 +26,16 @@ const Router = createBrowserRouter([
                 element: <Home/>,
             },
             {
+                path: "login",
+                element: <Login />
+                ,
+            },
+            {
                 path: "recipes",
                 children: [
                     {
                         index: true,
-                        element: <Recipes/>,
+                        element: <AllRecipes/>,
                     },
                     {
                         path: ":id",
@@ -96,11 +101,7 @@ const Router = createBrowserRouter([
         path: "*",
         element: <NotFound/>,
     },
-    {
-        path: "login",
-        element: <AuthProvider><Login /></AuthProvider>
-        ,
-    },
+    
     
 ],
 /* {

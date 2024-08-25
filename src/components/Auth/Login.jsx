@@ -85,8 +85,8 @@ function Login() {
     }
 
     return (
-        <section className="section">
-            <div className="columns is-centered">
+        <section className="section container is-max-desktop">
+            <div className="columns box is-centered">
                 <div className="column is-4">
                     <form onSubmit={handleSubmit}>
                         <div className="field">

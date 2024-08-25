@@ -51,7 +51,7 @@ function HeaderNav(){
                     
                    
                         {
-                            data ? (
+                            data && token? (
                                 <div className="navbar-end">
                                     <div className="media full-heigth">
                                         <div className="media-content">

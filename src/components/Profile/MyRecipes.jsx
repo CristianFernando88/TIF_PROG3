@@ -48,7 +48,8 @@ export default function MyRecipes(){
             </div>
             
             <hr />
-            <div className="columns is-multiline"> 
+            <div className="columns is-multiline">
+                
                 {
                     data ? (
                         data.results.filter((recipe)=>recipe.owner==user__id).map((recipe)=>(
