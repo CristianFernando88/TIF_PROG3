@@ -104,9 +104,9 @@ const Router = createBrowserRouter([
     
     
 ],
-/* {
-        basename:"/TIF_PRGO3/"
-    }, *///para desplazar la ruta de inicio cuando configuremos el vite config
+{
+    basename:"/TIF_PROG3/"
+    },
 );
 
 export { Router };
