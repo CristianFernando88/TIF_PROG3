@@ -13,9 +13,9 @@ function Login() {
     const navigate = useNavigate();
     
     //podemos usarlo para redireccionar a otra ruta distinta cuando se authintique para no volver al login
-    const {isAuthetucated} = useAuth("state");
-    if(isAuthetucated){
-        navigate("/");
+    const {isAuthenticated} = useAuth("state");
+    if(isAuthenticated){
+        navigate("/my-account");
     }
 
     function handleSubmit(event) {

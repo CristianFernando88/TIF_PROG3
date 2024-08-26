@@ -30,10 +30,8 @@ function CrudProvider({ children }){
     editMode,
     setEditMode
   }
-  /* const stateRecipe = {dataRecipe,loadingRecipe,errorRecipe,recipeFecth} */
-  /* const stateCategories = {categories,isLoadingCategries,isErrorCateories,categoriesFetch}; */
+  
   return <CrudContext.Provider value={data}>{children}</CrudContext.Provider>;
 };
 
 export { CrudProvider, CrudContext };
-/* export default CrudContext; */

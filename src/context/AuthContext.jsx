@@ -46,7 +46,7 @@ function AuthProvider({ children }) {
             });
             localStorage.setItem("authToken", token);
             localStorage.setItem("user__id", user__id);
-            const origin = location.state?.from?.pathname || "/";
+            const origin = location.state?.from?.pathname || "/my-account";
             navigate(origin);
         },
         logout: () => {

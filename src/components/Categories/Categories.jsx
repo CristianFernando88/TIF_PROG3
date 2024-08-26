@@ -38,11 +38,14 @@ function CardCategories({props}){
             <h1 className="title has-text-danger">Categorias</h1>
             <div className="grid is-justify-content-center">
                 {data.results.map((categoria)=>(
-                    <div key={categoria.id} className="cell">
-                        <CardCategory
-                        categoria={categoria}
-                        />
-                    </div>
+                    (categoria.recipes.length > 0)?(
+                        <div key={categoria.id} className="cell">
+                            <CardCategory
+                            categoria={categoria}
+                            />
+                        </div>
+                    ):(null)
+                    
                 ))}
             </div> 
         </section>
